@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dncq0es188k0c"]
+
+[ext_resource type="Texture2D" uid="uid://b3flneqdbkyjf" path="res://meteorite.png" id="1_oabld"]
+[ext_resource type="Script" uid="uid://01787d10gge" path="res://asteroid.gd" id="1_p0ukn"]
+
+[sub_resource type="GDScript" id="GDScript_gm5ib"]
+
+[node name="asteroid" type="Node2D"]
+script = ExtResource("1_p0ukn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(179, 221)
+scale = Vector2(0.606934, 0.698242)
+texture = ExtResource("1_oabld")
+script = SubResource("GDScript_gm5ib")

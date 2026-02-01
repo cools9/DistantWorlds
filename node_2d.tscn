@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://57vtw8nade8j"]
+
+[ext_resource type="Script" uid="uid://dvk71mikth4tp" path="res://node_2d.gd" id="1_wtcfe"]
+[ext_resource type="PackedScene" uid="uid://dncq0es188k0c" path="res://asteroid.tscn" id="2_epypp"]
+[ext_resource type="PackedScene" uid="uid://br0c6gkrk2pr2" path="res://spawner.tscn" id="3_0hol4"]
+[ext_resource type="PackedScene" uid="uid://djpafrvf2kum5" path="res://background.tscn" id="4_0hol4"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_wtcfe")
+
+[node name="asteroid" parent="." instance=ExtResource("2_epypp")]
+
+[node name="spawner" parent="." instance=ExtResource("3_0hol4")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PLAY" type="Button" parent="CanvasLayer"]
+offset_left = 361.0
+offset_top = 330.0
+offset_right = 820.0
+offset_bottom = 421.0
+theme_override_font_sizes/font_size = 43
+text = "PLAY"
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_left = 361.0
+offset_top = 443.0
+offset_right = 823.0
+offset_bottom = 537.0
+theme_override_font_sizes/font_size = 43
+text = "QUIT"
+
+[node name="background" parent="." instance=ExtResource("4_0hol4")]
+
+[connection signal="pressed" from="CanvasLayer/PLAY" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

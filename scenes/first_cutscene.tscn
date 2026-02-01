@@ -1,0 +1,115 @@
+[gd_scene load_steps=11 format=3 uid="uid://bocyrtp35dsa0"]
+
+[ext_resource type="Texture2D" uid="uid://8f5yh7ywsl4i" path="res://spaceship.png" id="1_3y6k8"]
+[ext_resource type="Script" uid="uid://d20pmjici83ou" path="res://scenes/first_cutscene.gd" id="1_o34km"]
+[ext_resource type="Texture2D" uid="uid://co6cnqx0xex02" path="res://fire.png" id="2_fmapg"]
+[ext_resource type="AudioStream" uid="uid://bywllmt0mxana" path="res://sounds/mayday.mp3" id="3_qreko"]
+[ext_resource type="AudioStream" uid="uid://dh8rkl3nclwyc" path="res://sounds/sink_rate.mp3" id="4_4swq3"]
+[ext_resource type="AudioStream" uid="uid://coteatjc0eleq" path="res://sounds/warning.mp3" id="5_o34km"]
+[ext_resource type="PackedScene" uid="uid://djpafrvf2kum5" path="res://background.tscn" id="7_ofmlk"]
+
+[sub_resource type="Animation" id="Animation_fmapg"]
+resource_name = "fly_in"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("spaceship:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.133333, 9.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-137, -134), Vector2(1288, 764)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("spaceship:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.166667, 3.2, 5.96667, 7.9, 9.36667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [2.44346, 1.36659, -0.607375, -4.37729, -5.09462]
+}
+
+[sub_resource type="Animation" id="Animation_qreko"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("spaceship:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-137, -134)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("spaceship:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.44346]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n2ft0"]
+_data = {
+&"RESET": SubResource("Animation_qreko"),
+&"fly_in": SubResource("Animation_fmapg")
+}
+
+[node name="FirstCutscene" type="Node2D"]
+script = ExtResource("1_o34km")
+
+[node name="spaceship" type="Sprite2D" parent="."]
+position = Vector2(-137, -134)
+rotation = 2.44346
+scale = Vector2(0.524414, 0.513672)
+texture = ExtResource("1_3y6k8")
+offset = Vector2(10, 0)
+
+[node name="flame" type="Sprite2D" parent="spaceship"]
+position = Vector2(21.7417, 336.239)
+rotation = 3.14159
+scale = Vector2(0.429746, 0.327253)
+texture = ExtResource("2_fmapg")
+
+[node name="anoterh_flame" type="Sprite2D" parent="spaceship"]
+position = Vector2(139.709, -114.714)
+rotation = 1.48877
+scale = Vector2(0.576592, 0.471013)
+texture = ExtResource("2_fmapg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_n2ft0")
+}
+
+[node name="mayday" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_qreko")
+volume_db = 4.0
+parameters/looping = true
+
+[node name="sink_rate" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_4swq3")
+volume_db = 4.0
+parameters/looping = true
+
+[node name="beep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_o34km")
+parameters/looping = true
+
+[node name="background" parent="." instance=ExtResource("7_ofmlk")]
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
